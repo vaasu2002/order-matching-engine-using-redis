@@ -1,10 +1,10 @@
 import { createClient } from 'redis';
 import { config } from 'dotenv';
 config();
-export class RedisClient {
+class RedisClient {
     private client: any; 
     private static instance: RedisClient;
-    private constructor(redisUrl = process.env.REDIS_URL || 'redis://localhost:6379') {
+    public constructor(redisUrl = process.env.REDIS_URL || 'redis://localhost:6379') {
         this.client = createClient({ url: redisUrl });
     }
 
@@ -31,3 +31,5 @@ export class RedisClient {
         return this.client;
     }
 }
+
+export {RedisClient};

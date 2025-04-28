@@ -30,6 +30,22 @@ class RedisClient {
     getClient(): any {
         return this.client;
     }
+
+    /**
+     * Initialize a counter if it doesn't exist
+     * @param key Counter key
+     * @param initialValue Initial value
+     */
+    async initCounter(key: string, initialValue: number = 0): Promise<void> {
+        const exists = await this.client.exists(key);
+        if(!exists){
+            await this.client.set(key, initialValue.toString());
+        }
+    }
+
+    async incrementCounter(key: string): Promise<number> {
+        return await this.client.incr(key);
+    }
 }
 
 export {RedisClient};
